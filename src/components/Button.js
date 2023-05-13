@@ -1,5 +1,59 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css, ThemeProvider } from "styled-components";
+import { darken, lighten } from "polished";
+
+const colorStyles = css`
+  ${({ theme, color, outline }) => {
+    const selected = theme.palette[color];
+    return css`
+      background: ${selected};
+      &:hover {
+        background: ${lighten(0.1, selected)};
+      }
+
+      &:active {
+        background: ${darken(0.1, selected)};
+      }
+
+      ${outline &&
+      css`
+        color: ${selected};
+        background: none;
+        border: 1px solid ${selected};
+        &:hover {
+          background: ${selected};
+          color: white;
+        }
+        &:active {
+          background: ${darken(0.1, selected)};
+          color: white;
+        }
+      `}
+    `;
+  }}
+`;
+
+const sizeStyles = css`
+  ${({ theme, size }) => {
+    const selected = theme.length[size];
+    return css`
+      ${selected};
+    `;
+  }}
+`;
+
+const full = css`
+  ${({ fullwidth }) =>
+    fullwidth &&
+    css`
+      width: 100%;
+      justify-content: center;
+      &:not(:first-child) {
+        margin-left: 0;
+        margin-top: 1rem;
+      }
+    `}
+`;
 
 const StyledButton = styled.button`
   display: inline-flex;
@@ -16,22 +70,35 @@ const StyledButton = styled.button`
   height: 2.25rem;
   font-size: 1rem;
 
-  background: #228be6;
-  &:hover {
-    background: #339af0;
-  }
+  ${sizeStyles}
 
-  &:active {
-    background: #1c7ed6;
-  }
+  ${colorStyles}
 
-  & + & {
+  &:not(:first-child) {
     margin-left: 1rem;
   }
+
+  ${full}
 `;
 
-function Button({ children, ...rest }) {
-  return <StyledButton {...rest}>{children}</StyledButton>;
+function Button({ children, color, size, outline, fullwidth, ...rest }) {
+  return (
+    <StyledButton
+      color={color}
+      size={size}
+      outline={outline}
+      fullwidth={fullwidth}
+      className={fullwidth ? "fully" : ""}
+      {...rest}
+    >
+      {children}
+    </StyledButton>
+  );
 }
+
+Button.defaultProps = {
+  color: "blue",
+  size: "medium",
+};
 
 export default Button;

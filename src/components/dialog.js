@@ -100,6 +100,7 @@ const ShortMarginButton = styled(Button)`
   &:not(:first-child) {
     margin-left: 0.5rem;
   }
+  
 `;
 
 function Dialog({

@@ -81,14 +81,22 @@ const StyledButton = styled.button`
   ${full}
 `;
 
-function Button({ children, color, size, outline, fullwidth, ...rest }) {
+function Button({
+  children,
+  color,
+  size,
+  outline,
+  fullwidth,
+  visible,
+  ...rest
+}) {
+  if (visible != null && !visible) return null;
   return (
     <StyledButton
       color={color}
       size={size}
       outline={outline}
       fullwidth={fullwidth}
-      className={fullwidth ? "fully" : ""}
       {...rest}
     >
       {children}

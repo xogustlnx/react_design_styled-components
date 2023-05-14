@@ -21,6 +21,8 @@ const ButtonGroup = styled.div`
 function App() {
   const [dialog, setDialog] = useState(false);
 
+  const [button, setButton] = useState(true);
+
   const onClickBtn = () => {
     setDialog(true);
   };
@@ -28,11 +30,13 @@ function App() {
   const onConfirm = () => {
     console.log("confirm");
     setDialog(false);
+    setButton(false);
   };
 
   const onCancel = () => {
     console.log("cancel");
     setDialog(false);
+    setButton(true);
   };
 
   return (
@@ -107,7 +111,13 @@ function App() {
             <Button size="large" color="gray" fullwidth>
               BUTTON
             </Button>
-            <Button size="large" color="pink" fullwidth onClick={onClickBtn}>
+            <Button
+              size="large"
+              color="pink"
+              fullwidth
+              onClick={onClickBtn}
+              visible={button}
+            >
               DELETE
             </Button>
           </ButtonGroup>
